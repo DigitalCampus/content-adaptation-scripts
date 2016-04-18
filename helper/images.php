@@ -1,16 +1,15 @@
 <?php
 
+/*
+ * 
+ *
+ */
+
+
 include '../local_settings.php';
 
 //connect to db
-$conn = mysql_connect('localhost', $DB->DBUSER, $DB->DBPASS) or die('Could not connect to server.' );
-mysql_select_db($DB->DBNAME, $conn) or die('Could not select database.');
-mysql_query("SET NAMES utf8");
-
-
-$link = "http://moodle.digital-campus.org/course/modedit.php?return=0&sr=0&update=";
-
-
+$db = new mysqli('localhost', $DB->DBUSER, $DB->DBPASS, $DB->DBNAME );
 
 	
 $file = "Figure.html";
@@ -35,8 +34,5 @@ fwrite($fh, "</ol>");
 
 fclose($fh);
 
-
-
-
 // db disconnect
-mysql_close($conn);
+$db->close();

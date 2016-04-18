@@ -1,10 +1,14 @@
 <?php
+/*
+ * 
+ *
+ */
+
+
 include 'local_settings.php';
 
 //connect to db
-$conn = mysql_connect('localhost', $DB->DBUSER, $DB->DBPASS) or die('Could not connect to server.' );
-mysql_select_db($DB->DBNAME, $conn) or die('Could not select database.');
-mysql_query("SET NAMES utf8");
+$db = new mysqli('localhost', $DB->DBUSER, $DB->DBPASS, $DB->DBNAME );
 
 // set course id
 $course = 135;
@@ -134,6 +138,6 @@ while($row = mysql_fetch_array($result, MYSQL_ASSOC)){
 
 
 // db disconnect
-mysql_close($conn);
+$db->close();
 
 ?>

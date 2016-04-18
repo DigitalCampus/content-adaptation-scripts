@@ -24,8 +24,8 @@ foreach ($ADAPT->COURSES as $course ){
 			array_push($seqArray, $row['id']);
 		}
 		$result->free();
-		$seq = implode($seqArray,',');
-		
+		$seq = implode(',',$seqArray);
+				
 		$sqlString = 'UPDATE mdl_course_sections 
 						SET sequence=\'%1$s\' 
 						WHERE course=%2$d

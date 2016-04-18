@@ -1,17 +1,15 @@
 <?php
+/*
+ *
+ *
+ */
+
 
 include '../local_settings.php';
 
 //connect to db
-$conn = mysql_connect('localhost', $DB->DBUSER, $DB->DBPASS) or die('Could not connect to server.' );
-mysql_select_db($DB->DBNAME, $conn) or die('Could not select database.');
-mysql_query("SET NAMES utf8");
+$db = new mysqli('localhost', $DB->DBUSER, $DB->DBPASS, $DB->DBNAME );
 
-
-$link = "http://moodle.digital-campus.org/mod/page/view.php?id=";
-
-
-	
 $file = "large-images.html";
 $fh = fopen($file, 'w') or die("can't open file"); 
 fwrite($fh, "<h2>Pages with 'large images'</h2>");
@@ -45,8 +43,5 @@ fwrite($fh, "</ol>");
 
 fclose($fh);
 
-
-
-
 // db disconnect
-mysql_close($conn);
+$db->close();
