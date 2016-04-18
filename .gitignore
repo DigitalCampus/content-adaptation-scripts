@@ -4,3 +4,4 @@
 .settings/*
 output/*
 
+/local_settings.php
