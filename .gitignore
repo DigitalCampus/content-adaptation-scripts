@@ -2,6 +2,6 @@
 .project
 .buildpath
 .settings/*
-output/*
+_output/*
 
-/local_settings.php
+local_settings.php
