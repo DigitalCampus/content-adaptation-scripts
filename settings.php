@@ -19,4 +19,7 @@ if (!is_dir($OUTPUT_DIR)){
 	mkdir($OUTPUT_DIR);
 }
 
+// maximum no topics per course
+$MAX_TOPICS = 30;
+
 

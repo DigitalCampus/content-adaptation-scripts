@@ -1,41 +1,46 @@
 <?php
+/*
+ * 
+ * 
+ */
+
+
 include 'local_settings.php';
 
 //connect to db
-$conn = mysql_connect('localhost', $DB->DBUSER, $DB->DBPASS) or die('Could not connect to server.' );
-mysql_select_db($DB->DBNAME, $conn) or die('Could not select database.');
-mysql_query("SET NAMES utf8");
-
-$section_end = 22;
+$db = new mysqli('localhost', $DB->DBUSER, $DB->DBPASS, $DB->DBNAME );
 
 foreach ($ADAPT->COURSES as $course ){
 
-	for ($section = 1; $section<= $section_end; $section++){
-		$sql = "SELECT cm.id FROM mdl_page p inner join mdl_course_modules cm ON cm.instance = p.id WHERE p.course=".$course." AND p.name LIKE '".$section.".%'";
-		$result = mysql_query($sql,$conn);
-		$seq = "";
-		while($row = mysql_fetch_array($result, MYSQL_ASSOC)){
-			$seq .= $row['id'].",";
+	for ($section = 1; $section<= $MAX_TOPICS; $section++){
+		$sqlString = 'SELECT cm.id FROM mdl_page p 
+						INNER JOIN mdl_course_modules cm ON cm.instance = p.id 
+						WHERE p.course=%1$d  
+						AND p.name LIKE \'%2$d.%%\'';
+		$sql = sprintf($sqlString, $course, $section);
+		$result = $db->query($sql);
+		$seqArray = [];
+		while($row = $result->fetch_assoc()){
+			array_push($seqArray, $row['id']);
 		}
-	
-		$seq =substr($seq, 0, -1);
-		print $seq;
-	
-		$sql = "SELECT * FROM mdl_course_sections WHERE course=".$course." AND section = ".($section+1);
-		echo $sql;
-		$result = mysql_query($sql,$conn);
-		$toupdate = 0;
-		while($row = mysql_fetch_array($result, MYSQL_ASSOC)){
-			$toupdate = $row['id'];
-		}
-	
-		$sql = "UPDATE mdl_course_sections SET sequence='".$seq."' WHERE course=".$course." AND section = ".($section+1);
-		mysql_query($sql,$conn);
+		$result->free();
+		$seq = implode($seqArray,',');
+		
+		$sqlString = 'UPDATE mdl_course_sections 
+						SET sequence=\'%1$s\' 
+						WHERE course=%2$d
+						AND section = %3$d';
+		$sql = sprintf($sqlString, $seq, $course, $section+1);
+		$db->query($sql);
 	}
 	
-	$sql = "UPDATE mdl_course_sections SET sequence='' WHERE course=".$course." AND section = 1";
-	mysql_query($sql,$conn);
+	// reset the first topic
+	$sqlString = 'UPDATE mdl_course_sections SET sequence=\'\' 
+					WHERE course=%1$d 
+					AND section = 1';
+	$sql = sprintf($sqlString, $course);
+	$db->query($sql);
 }
 
 // db disconnect
-mysql_close($conn);
+$db->close();
