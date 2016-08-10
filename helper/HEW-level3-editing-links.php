@@ -10,44 +10,17 @@ include '../local_settings.php';
 //connect to db
 $db = new mysqli('localhost', $DB->DBUSER, $DB->DBPASS, $DB->DBNAME );
 
-$ADAPT->COURSES = array(373,374,375,376);
+$ADAPT->COURSES = array(291, 296, 308, 317, 312, 310, 307, 303, 313, 315, 316, 319 );
 
-$SEARCH_TERMS = array(	"ethiopia", 
-						"woreda",
-						"kebele",						
-						"health extension worker",
-						"HEW",
-						"health development army",
-						"HDA",
-						"health promotion worker",
-						"Addis",
-						"Oromo",
-						"Oromia",
-						"tigray",
-						"amhara",
+$SEARCH_TERMS = array(	"health extension worker",
+						"Health Centre",
+						"Hospital",
 						"health post",
-						"MoH",
-						"FMoH",
-						"Adama",
-						"korales",
-						"Ministry of Water and Energy",
-						"Mekelle University",
-						"Bahir Dar",
-						"Regional Health Bureau",
-						"Ministry of Works and Urban Development",
-						"MoWE",
-						"MoWUD",
-						"MFSH",
-						"CLTSH",
-						"Town Water Board",
-						"Hawassa",
-						"Wechale",
-						"birr",
-						"gondar",
-						"Operation and Maintenance Department",
-						"Wuha Agar",
-						"National Fluorosis Mitigation Project",
-						"debo"	
+						"box",
+						"case study",
+						"table",
+						"figure",
+						"fig"	
 );
 
 foreach ($ADAPT->COURSES as $course){
